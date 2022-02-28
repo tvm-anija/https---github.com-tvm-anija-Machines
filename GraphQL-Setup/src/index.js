@@ -3,7 +3,7 @@ import {GraphQLServer} from 'graphql-yoga';
 //Type Definitions(schema)
 const typeDefs=`
 type Query{
-    me:Machine!
+    machine:Machine!
     machines(query:String):[Machine!]!
     sensors(query:String):[Sensor!]!
     SensorData:[SensorDataPoint!]!
@@ -28,7 +28,8 @@ type GPSPosition {
     }  
 type SensorDataPoint{
     id:ID!
-    text:String!
+    value:Float!
+    date:String!
     machine:ID!
 }
 `
@@ -82,11 +83,13 @@ const GPSPositions=[{
 
 const SensorData =[{
     id:'21',
-    text:'12/02/2022',
+    value:12.02,
+    date:'12-02-2022',
     machine:'1'
     },{
-        id:'22',
-    text:'22/02/2022',
+    id:'22',
+    value:45.02,
+    date:'22-02-2022',
     machine:'2'
     }
 ]
@@ -111,7 +114,7 @@ const resolvers ={
                 return isTitleMatch || isBodyMatch
             })
         },
-        me(){
+        machine(){
             return{
                 id:'123098',
                 name:'Mike'
